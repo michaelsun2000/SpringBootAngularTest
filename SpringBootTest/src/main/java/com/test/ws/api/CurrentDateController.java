@@ -1,0 +1,24 @@
+package com.test.ws.api;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.concurrent.atomic.AtomicLong;
+ 
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.test.ws.model.FormattedDate;
+ 
+@RestController
+public class CurrentDateController {
+ 
+	private final AtomicLong counter = new AtomicLong();
+ 
+	@RequestMapping("/currentdate/{pattern}")
+	public FormattedDate formatCurrentDate(@PathVariable final String pattern) {
+		DateTimeFormatter fmt = DateTimeFormatter.ofPattern(pattern);
+ 
+		return new FormattedDate(counter.incrementAndGet(), pattern, fmt.format(LocalDateTime.now()));
+	}
+}

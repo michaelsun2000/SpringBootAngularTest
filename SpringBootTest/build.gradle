@@ -1,0 +1,73 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.4.4.RELEASE")
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+ 
+apply plugin: 'java'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'war'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+
+apply plugin: 'eclipse-wtp'
+ 
+
+/*
+jar {
+    baseName = 'SpringBootTest'
+    version =  '1.0.0'
+} */
+
+
+springBoot{
+	buildInfo()
+}
+
+war {
+    baseName = 'SpringBootTest'
+    version =  '1.0.0'
+} 
+
+configurations {
+	providedRuntime
+}
+ 
+ 
+
+ 
+dependencies {
+    compile("org.springframework.boot:spring-boot-starter-web")
+    compile("org.springframework.boot:spring-boot-starter-actuator")
+    compile("io.springfox:springfox-swagger2:2.0.2")
+     compile("io.springfox:springfox-swagger-ui:2.0.2")
+     
+    providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
+    
+    testCompile("junit:junit")
+}
+ 
+ 
+ eclipse {
+	wtp{
+		component {
+			contextPath = 'SpringBootTest'
+		}
+	}
+
+} 
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.3'
+} 
+
+
+
+
